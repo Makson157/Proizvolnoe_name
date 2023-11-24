@@ -10,35 +10,29 @@ class Example(QMainWindow):
         super().__init__()
         uic.loadUi('Ui.ui, self')
         self.flag = False
+        self.pushButton.clicked.connect(self.go_paint)
 
-    # Метод срабатывает, когда виджету надо
-    # перерисовать свое содержимое,
-    # например, при создании формы
+    def go_paint(self):
+        self.qp = QPainter()
+        self.flag = True
+        self.update()
+
     def paintEvent(self, event):
         if self.flag:
-            `# Создаем объект QPainter для рисования
-            qp = QPainter()
-            # Начинаем процесс рисования
-            qp.begin(self)
-            self.draw_flag(qp)
-            # Завершаем рисование
-            qp.end()
-            self.flag = False
+            self.qp.begin(self)
+            self.draw_flag(self.qp)
+            self.qp.end()
 
     def draw_flag(self, qp):
-        self.flag = True
-        # Задаем кисть
         qp.setBrush(QColor(255, 255, 0))
         # Рисуем прямоугольник заданной кистью
         x, y = randint(0, 316), randint(0, 267)
-        d = rfndiint(10, 30)
-        qp.drawEllipse(x, y, d, d)
-        qp.setBrush(QColor(0, 255, 0))
-        self.update()
+        d = randint(10, 30)
+        self.qp.drawEllipse(x, y, d, d)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Example()
     ex.show()
-    sys.exit(app.exec()) QColor
+    sys.exit(app.exec())
